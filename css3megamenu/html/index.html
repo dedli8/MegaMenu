@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<style>
+		/* Reset */
+		.megamenu,
+		.megamenu a,
+		.megamenu ul,
+		.megamenu li,
+		.megamenu div,
+		.megamenu form,
+		.megamenu input {
+			margin: 0;
+			padding: 0;
+			border: none;
+			outline: none;
+		}
+
+		.megamenu a { text-decoration: none; }
+
+		.megamenu li { list-style: none; }
+
+		/* Menu Container */
+		.menu-icon{
+			display: inline-block;
+			width: 30px;
+			height: 30px;
+			background: no-repeat center url("img/menu-icon.png");
+			background-size: cover;
+		}
+		.menu-wrapper{
+			max-width: 75%;
+		}
+		.menu-wrapper:hover>.megamenu{
+			display: block;
+		}
+		.megamenu {
+			display: none;
+			position: relative;
+			cursor: default;
+			z-index: 500;
+		}
+
+		/* Menu List */
+		.megamenu > li {
+			display: block;
+		}
+
+		/* Menu Links */
+		.megamenu > li > a {
+			position: relative;
+			display: block;
+			z-index: 510;
+			height: 54px;
+			padding: 0 20px;
+			line-height: 54px;
+			/*font-family: Helvetica, Arial, sans-serif;*/
+			font-weight: bold;
+			font-size: 12px;
+			color: #fcfcfc;
+			text-shadow: 0 0 1px rgba(0,0,0,.35);
+
+			/*background: #372f2b;*/
+			background-color: black;
+			border-left: 1px solid #4b4441;
+
+			-webkit-transition: all .3s ease;
+			-moz-transition: all .3s ease;
+			-o-transition: all .3s ease;
+			-ms-transition: all .3s ease;
+			transition: all .3s ease;
+		}
+		.megamenu > li > a:after{
+			content: "\002B";
+
+			position: absolute;
+			right: 15px;
+			top: 0;
+			transform: rotate(90deg);
+			color: white;
+			z-index: 1;
+			font-size: 20px;
+			display: block;
+		}
+
+		.megamenu > li:first-child > a {
+			border-radius: 3px 0 0 3px;
+			border-left: none;
+		}
+
+		/* Menu Dropdown */
+		.megamenu > li > div {
+			display: none;
+			width: 100%;
+			top: 50px;
+			left: 0;
+			background-color: #f8f8f8;
+			opacity: 0;
+			visibility: hidden;
+			overflow: hidden;
+			border-radius: 0 0 3px 3px;
+
+			-webkit-transition: all .3s ease .15s;
+			-moz-transition: all .3s ease .15s;
+			-o-transition: all .3s ease .15s;
+			-ms-transition: all .3s ease .15s;
+			transition: all .3s ease .15s;
+		}
+
+		.megamenu > li:hover > div {
+			display: block;
+			opacity: 1;
+			visibility: visible;
+			overflow: visible;
+		}
+		.megamenu-column > ul{
+			display: none;
+		}
+		/* Search Form */
+		.megamenu > li.megamenu-search > form {
+			position: relative;
+			width: inherit;
+			height: 54px;
+			z-index: 510;
+			border-left: 1px solid #4b4441;
+		}
+
+		.megamenu > li.megamenu-search input[type="text"] {
+			display: block;
+			float: left;
+			width: 1px;
+			height: 54px;
+			padding: 15px 0;
+			line-height: 24px;
+
+			/*font-family: Helvetica, Arial, sans-serif;*/
+			font-weight: bold;
+			font-size: 12px;
+			color: #999999;
+			text-shadow: 0 0 1px rgba(0,0,0,.35);
+
+			background: black;
+
+			-webkit-transition: all .3s ease 1s;
+			-moz-transition: all .3s ease 1s;
+			-o-transition: all .3s ease 1s;
+			-ms-transition: all .3s ease 1s;
+			transition: all .3s ease 1s;
+		}
+
+		.megamenu > li.megamenu-search input[type="text"]:focus { color: #fcfcfc; }
+
+		.megamenu > li.megamenu-search input[type="text"]:focus,
+		.megamenu > li.megamenu-search:hover input[type="text"] {
+			width: 110px;
+			padding: 15px 20px;
+
+			-webkit-transition: all .3s ease .1s;
+			-moz-transition: all .3s ease .1s;
+			-o-transition: all .3s ease .1s;
+			-ms-transition: all .3s ease .1s;
+			transition: all .3s ease .1s;
+		}
+
+		.megamenu > li.megamenu-search input[type="submit"] {
+			display: block;
+			float: left;
+			width: 20px;
+			height: 54px;
+			padding: 0 25px;
+			cursor: pointer;
+
+			background: black url(./img/search-icon.png) no-repeat center center;
+
+			border-radius: 0 3px 3px 0;
+
+			-webkit-transition: all .3s ease;
+			-moz-transition: all .3s ease;
+			-o-transition: all .3s ease;
+			-ms-transition: all .3s ease;
+			transition: all .3s ease;
+		}
+
+		.megamenu > li.megamenu-search input[type="submit"]:hover { background-color: #4b4441; }
+		/* Menu Content Styles */
+		.megamenu .megamenu-column {
+			padding: 2.5%;
+		}
+
+		.megamenu .megamenu-column h3 {
+			margin: 20px 0 10px 0;
+			line-height: 18px;
+
+			/*font-family: Helvetica, Arial, sans-serif;*/
+			font-weight: bold;
+			font-size: 14px;
+			color: #372f2b;
+			text-transform: uppercase;
+		}
+		.megamenu .megamenu-column:hover > ul{
+			display: block;
+		}
+		.megamenu .megamenu-column h3.orange { color: #ff722b; }
+
+		.megamenu .megamenu-column li a {
+			display: inline-block;
+			line-height: 26px;
+
+			font-family: Helvetica, Arial, sans-serif;
+			/*font-weight: bold;*/
+			font-size: 13px;
+			color: #888888;
+		}
+
+		.megamenu .megamenu-column li a:hover { color: #666666; text-decoration-color: #cecece; text-decoration: underline;}
+
+		.megamenu .megamenu-column>ul>li{
+			position: relative;
+		}
+
+		.megamenu .sub-menu{
+			background-color: white;
+			box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+			display: none;
+			padding: 5px 10px 5px 15px;
+			right: -60px;
+			top: -5px;
+			border: 1px solid #cecece;
+			border-radius: 5px;
+			z-index: 1;
+		}
+		.megamenu .sub-menu>li>a{
+			position: relative;
+		}
+		.megamenu .sub-menu>li>a:after{
+			content: "\203A";
+			position: absolute;
+			left: -7px;
+			top: -1px;
+			z-index: 1;
+			font-size: 15px;
+		}
+		.megamenu .megamenu-column>ul>li:hover .sub-menu{
+			display: block;
+		}
+		.has-submenu{
+			position: relative;
+		}
+		.has-submenu:after{
+			content: "\203A";
+			position: absolute;
+			right: 0;
+			top: -1px;
+			z-index: 1;
+			font-size: 20px;
+		}
+		.megamenu .megamenu-column>ul>.has-submenu:hover:after{
+			display: none;
+		}
+
+		@media screen and (min-width: 640px) {
+			.megamenu{
+				display: inline-block;
+				text-align: left;
+			}
+			.menu-wrapper:hover>.megamenu{
+				display: inline-block;
+			}
+			.megamenu > li{
+				float: left;
+			}
+			.megamenu > li > a{
+				border-right: 1px solid #312a27;
+
+			}
+			.megamenu > li:hover > a { background: white; color: black }
+			.megamenu > li:hover > a:after { color: black; transform: rotate(270deg) }
+			/*.megamenu .megamenu-column {*/
+			/*	float: left;*/
+			/*	width: 20%;*/
+			/*}*/
+			.megamenu > li > div {
+				display: block;
+				position: absolute;
+				background-color: #ffffff;
+			}
+			.megamenu-column > ul{
+				display: block;
+			}
+			.menu-icon{
+				display: none;
+			}
+			.megamenu > li > a:after {
+				right: 5px;
+				content: "\203A";
+			}
+			.megamenu .sub-menu{
+				position: absolute;
+			}
+			.menu-wrapper{
+				display: block;
+				text-align: center;
+				margin: 0 auto;
+				position: relative;
+				height: 54px;
+				max-width: unset;
+			}
+			.megamenu > li:hover > div {
+				display: flex;
+				justify-content: space-between;
+			}
+		}
+	</style>
+	</head>
+
+<body>
+
+<div class="menu-wrapper">
+<div class="menu-icon"></div>
+	<ul class="megamenu">
+		<li>
+			<a href="#">What's new</a>
+			<div>
+				<div class="megamenu-column">
+					<h3>Home</h3>
+					<ul>
+						<li class="has-submenu"><a href="#">Pampers Diapers</a>
+							<ul class="sub-menu">
+							<li><a href="!#">Платья</a></li>
+							<li><a href="!#">Туники</a></li>
+						</ul></li>
+						<li><a href="#">Huggies Diapers</a></li>
+						<li><a href="#">Seventh Generation</a></li>
+						<li><a href="#">Diapers</a></li>
+						<li><a href="#">Derbies</a></li>
+						<li><a href="#">Driving shoes</a></li>
+						<li><a href="#">Espadrilles</a></li>
+						<li><a href="#">Loafers</a></li>
+					</ul>
+				</div>
+
+				<div class="megamenu-column">
+					<h3>Home</h3>
+					<ul>
+						<li><a href="#">Driving shoes</a></li>
+						<li><a href="#">Espadrilles</a></li>
+						<li><a href="#">Loafers</a></li>
+					</ul>
+
+					<h3>Home</h3>
+					<ul>
+						<li><a href="#">Driving shoes</a></li>
+						<li><a href="#">Espadrilles</a></li>
+						<li><a href="#">Loafers</a></li>
+					</ul>
+				</div>
+
+				<div class="megamenu-column">
+					<h3>Home</h3>
+					<ul>
+						<li><a href="#">Pampers Diapers</a></li>
+						<li><a href="#">Huggies Diapers</a></li>
+						<li><a href="#">Seventh Generation</a></li>
+						<li><a href="#">Diapers</a></li>
+						<li><a href="#">Derbies</a></li>
+						<li><a href="#">Driving shoes</a></li>
+						<li><a href="#">Espadrilles</a></li>
+						<li><a href="#">Loafers</a></li>
+					</ul>
+				</div>
+
+				<div class="megamenu-column">
+					<h3 class="orange">Related Categories</h3>
+					<ul>
+						<li><a href="#">Pampers Diapers</a></li>
+						<li><a href="#">Huggies Diapers</a></li>
+						<li><a href="#">Diapers</a></li>
+					</ul>
+
+					<h3 class="orange">Brands</h3>
+					<ul>
+						<li><a href="#">Driving shoes</a></li>
+						<li><a href="#">Espadrilles</a></li>
+					</ul>
+				</div>
+			</div>
+		</li>
+		<li><a href="#">Top rated</a></li>
+		<li>
+			<a href="#">Earnings</a>
+			<div>
+				<div class="megamenu-column">
+					<h3 class="orange">Related Categories</h3>
+					<ul>
+						<li><a href="#">Pampers Diapers</a></li>
+						<li><a href="#">Huggies Diapers</a></li>
+						<li><a href="#">Diapers</a></li>
+					</ul>
+
+					<h3 class="orange">Brands</h3>
+					<ul>
+						<li><a href="#">Driving shoes</a></li>
+						<li><a href="#">Espadrilles</a></li>
+					</ul>
+				</div>
+
+				<div class="megamenu-column">
+					<h3>Home</h3>
+					<ul>
+						<li><a href="#">Pampers Diapers</a></li>
+						<li><a href="#">Huggies Diapers</a></li>
+						<li><a href="#">Seventh Generation</a></li>
+						<li><a href="#">Diapers</a></li>
+						<li><a href="#">Derbies</a></li>
+						<li><a href="#">Driving shoes</a></li>
+						<li><a href="#">Espadrilles</a></li>
+						<li><a href="#">Loafers</a></li>
+					</ul>
+				</div>
+
+				<div class="megamenu-column">
+					<h3>Home</h3>
+					<ul>
+						<li><a href="#">Driving shoes</a></li>
+						<li><a href="#">Espadrilles</a></li>
+						<li><a href="#">Loafers</a></li>
+					</ul>
+
+					<h3>Home</h3>
+					<ul>
+						<li><a href="#">Driving shoes</a></li>
+						<li><a href="#">Espadrilles</a></li>
+						<li><a href="#">Loafers</a></li>
+					</ul>
+				</div>
+
+				<div class="megamenu-column">
+					<h3>Home</h3>
+					<ul>
+						<li><a href="#">Pampers Diapers</a></li>
+						<li><a href="#">Huggies Diapers</a></li>
+						<li><a href="#">Seventh Generation</a></li>
+						<li><a href="#">Diapers</a></li>
+						<li><a href="#">Derbies</a></li>
+						<li><a href="#">Driving shoes</a></li>
+						<li><a href="#">Espadrilles</a></li>
+						<li><a href="#">Loafers</a></li>
+					</ul>
+				</div>
+			</div>
+		</li>
+		<li><a href="#">Rings</a></li>
+		<li><a href="#">Bracelets</a></li>
+		<li><a href="#">All Categories</a></li>
+
+	</ul>
+
+</div>
+	
+</body>
+
+</html>
